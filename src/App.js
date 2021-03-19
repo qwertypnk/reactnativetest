@@ -5,8 +5,10 @@ import { PersistGate } from 'redux-persist/lib/integration/react'
 import { store, persistor } from '@/Store'
 import { ApplicationNavigator } from '@/Navigators'
 import './Translations'
+import LoginProvider from '@/Context/LoginContext'
 
 const App = () => (
+  <LoginProvider>
   <Provider store={store}>
     {/**
      * PersistGate delays the rendering of the app's UI until the persisted state has been retrieved
@@ -19,6 +21,8 @@ const App = () => (
       <ApplicationNavigator />
     </PersistGate>
   </Provider>
+  </LoginProvider>
+
 )
 
 export default App

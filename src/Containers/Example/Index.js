@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState,useContext } from 'react'
+import { useDispatch } from 'react-redux'
 import {
   View,
   ActivityIndicator,
@@ -12,41 +12,41 @@ import { useTheme } from '@/Theme'
 import FetchOne from '@/Store/User/FetchOne'
 import { useTranslation } from 'react-i18next'
 import ChangeTheme from '@/Store/Theme/ChangeTheme'
+import { LoginContext } from '../../Context/LoginContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const IndexExampleContainer = () => {
   const { t } = useTranslation()
   const { Common, Fonts, Gutters, Layout } = useTheme()
   const dispatch = useDispatch()
-
-  const user = useSelector((state) => state.user.item)
-  const fetchOneUserLoading = useSelector(
-    (state) => state.user.fetchOne.loading,
-  )
-  const fetchOneUserError = useSelector((state) => state.user.fetchOne.error)
+  const {userLoggedIn,setUserLoggedIn} = useContext(LoginContext)
+ // const user = useSelector((state) => state.user.item)
+  // const fetchOneUserLoading = useSelector(
+  //   (state) => state.user.fetchOne.loading,
+  // )
+  // const fetchOneUserError = useSelector((state) => state.user.fetchOne.error)
 
   const [userId, setUserId] = useState('1')
 
   const fetch = (id) => {
-    setUserId(id)
-    dispatch(FetchOne.action(id))
+    // setUserId(id)
+  //  dispatch(FetchOne.action(id))
   }
 
   const changeTheme = ({ theme, darkMode }) => {
     dispatch(ChangeTheme.action({ theme, darkMode }))
   }
-
+  const logout=async()=>{
+    setUserLoggedIn(null)
+    await AsyncStorage.removeItem('user')
+  }
   return (
     <View style={[Layout.fill, Layout.colCenter, Gutters.smallHPadding]}>
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
         <Brand />
-        {fetchOneUserLoading && <ActivityIndicator />}
-        {fetchOneUserError ? (
-          <Text style={Fonts.textRegular}>{fetchOneUserError.message}</Text>
-        ) : (
           <Text style={Fonts.textRegular}>
-            {t('example.helloUser', { name: user.name })}
+            {t('example.helloUser', { name: userLoggedIn?.username })}
           </Text>
-        )}
       </View>
       <View
         style={[
@@ -62,7 +62,7 @@ const IndexExampleContainer = () => {
         </Text>
         <TextInput
           onChangeText={(text) => fetch(text)}
-          editable={!fetchOneUserLoading}
+          // editable={!fetchOneUserLoading}
           keyboardType={'number-pad'}
           maxLength={1}
           value={userId}
@@ -89,6 +89,11 @@ const IndexExampleContainer = () => {
         onPress={() => changeTheme({ darkMode: false })}
       >
         <Text style={Fonts.textRegular}>Light</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+      // style={[Common.button.outline, Gutters.regularBMargin]}
+       onPress={logout}>
+         <Text>Log out</Text>
       </TouchableOpacity>
     </View>
   )

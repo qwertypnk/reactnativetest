@@ -1,0 +1,17 @@
+[
+    {
+        "username":"User1",
+        "fullName":"Test Test",
+        "isFriend":true
+    },
+    {
+        "username":"User2",
+        "fullName":"Test2 Test2",
+        "isFriend":false
+    },
+    {
+        "username":"User3",
+        "fullName":"Test3 Test3",
+        "isFriend":false
+    }
+]
