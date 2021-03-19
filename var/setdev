@@ -1,0 +1,7 @@
+#!/bin/bash
+
+ROOT_PATH="$(dirname $(cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P))"
+
+export JAVA_HOME="$ROOT_PATH/android/sdk-mac/java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home"
+export ANDROID_HOME="$ROOT_PATH/android/sdk-mac/android-sdk"
+export ANDROID_SDK_ROOT="$ROOT_PATH/android/sdk-mac/android-sdk/build-tools"
