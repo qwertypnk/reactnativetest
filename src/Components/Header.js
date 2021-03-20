@@ -6,7 +6,7 @@ import {useTheme} from '@/Theme'
 const Header = ({title}) => {
 const navigation=useNavigation()
 const { Common } = useTheme()
-return <View style={{height:60,width:'100%',backgroundColor:'#E14032',flexDirection:'row'}}>
+return <View style={{height:60,width:'100%',backgroundColor:'#EB5757',flexDirection:'row'}}>
 <Pressable style={{width:'15%',alignItems:'center',justifyContent:'center'}} onPress={()=>navigation.goBack()}>
 <Icon name='chevron-back' color='white' size={25}/>
 </Pressable>

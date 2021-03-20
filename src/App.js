@@ -6,6 +6,8 @@ import { store, persistor } from '@/Store'
 import { ApplicationNavigator } from '@/Navigators'
 import './Translations'
 import LoginProvider from '@/Context/LoginContext'
+import {StatusBar} from 'react-native'
+import FlashMessage from 'react-native-flash-message'
 
 const App = () => (
   <LoginProvider>
@@ -17,10 +19,12 @@ const App = () => (
      * for example `loading={<SplashScreen />}`.
      * @see https://github.com/rt2zz/redux-persist/blob/master/docs/PersistGate.md
      */}
+     <StatusBar backgroundColor='#EB5757' barStyle='dark-content'/>
     <PersistGate loading={null} persistor={persistor}>
       <ApplicationNavigator />
     </PersistGate>
   </Provider>
+  <FlashMessage position='top' />
   </LoginProvider>
 
 )

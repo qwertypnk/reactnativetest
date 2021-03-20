@@ -6,14 +6,16 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  StyleSheet
 } from 'react-native'
-import { Brand } from '@/Components'
+import { Brand,Button,Container,Input } from '@/Components'
 import { useTheme } from '@/Theme'
 import FetchOne from '@/Store/User/FetchOne'
 import { useTranslation } from 'react-i18next'
 import ChangeTheme from '@/Store/Theme/ChangeTheme'
 import { LoginContext } from '../../Context/LoginContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 const IndexExampleContainer = () => {
   const { t } = useTranslation()
@@ -41,62 +43,36 @@ const IndexExampleContainer = () => {
     await AsyncStorage.removeItem('user')
   }
   return (
-    <View style={[Layout.fill, Layout.colCenter, Gutters.smallHPadding]}>
-      <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
-        <Brand />
-          <Text style={Fonts.textRegular}>
-            {t('example.helloUser', { name: userLoggedIn?.username })}
+    <Container style={{paddingHorizontal:'10%'}}>
+      <View style={[[Layout.colCenter, Gutters.smallHPadding,{marginTop:25,marginBottom:10}]]}>
+        <Brand height={150} width={150}/>
+          <Text style={[localStyles.textHeader,{marginVertical:0,fontSize:24,fontWeight:'bold'}]}>
+           { userLoggedIn?.fullName }
           </Text>
       </View>
-      <View
-        style={[
-          Layout.row,
-          Layout.rowHCenter,
-          Gutters.smallHPadding,
-          Gutters.largeVMargin,
-          Common.backgroundPrimary,
-        ]}
-      >
-        <Text style={[Layout.fill, Fonts.textCenter, Fonts.textSmall]}>
-          {t('example.labels.userId')}
+        <Text style={localStyles.textHeader}>
+          User ID:
         </Text>
-        <TextInput
-          onChangeText={(text) => fetch(text)}
-          // editable={!fetchOneUserLoading}
-          keyboardType={'number-pad'}
-          maxLength={1}
-          value={userId}
-          selectTextOnFocus
-          style={[Layout.fill, Common.textInput]}
-        />
-      </View>
-      <Text style={[Fonts.textRegular, Gutters.smallBMargin]}>DarkMode :</Text>
-
+        <Input value={userId} onChangeText={(text) => fetch(text)}/>
+      <Text style={localStyles.textHeader}>Mode:</Text>
+      <View style={{alignItems:'center'}}>
+      <Button title='Auto' onPress={() => changeTheme({ darkMode: null })} withMargin/>
+      <Button title='Dark'  onPress={() => changeTheme({ darkMode: true })} withMargin transparent/>
+      <Button title='Light' onPress={() => changeTheme({ darkMode: false })} withMargin transparent/>
       <TouchableOpacity
-        style={[Common.button.rounded, Gutters.regularBMargin]}
-        onPress={() => changeTheme({ darkMode: null })}
-      >
-        <Text style={Fonts.textRegular}>Auto</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[Common.button.outlineRounded, Gutters.regularBMargin]}
-        onPress={() => changeTheme({ darkMode: true })}
-      >
-        <Text style={Fonts.textRegular}>Dark</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[Common.button.outline, Gutters.regularBMargin]}
-        onPress={() => changeTheme({ darkMode: false })}
-      >
-        <Text style={Fonts.textRegular}>Light</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-      // style={[Common.button.outline, Gutters.regularBMargin]}
        onPress={logout}>
-         <Text>Log out</Text>
+         <Text style={[localStyles.textHeader,{fontWeight:'bold',marginTop:35}]}>Log out</Text>
       </TouchableOpacity>
-    </View>
+      </View>
+    </Container>
   )
 }
 
+const localStyles=StyleSheet.create({
+  textHeader:{
+    fontSize:18,
+    color:'white',
+    marginVertical:15
+  }
+})
 export default IndexExampleContainer

@@ -1,9 +1,17 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text,StyleSheet } from 'react-native'
+import Icon from 'react-native-vector-icons/Feather'
 
-const RoundButton = ({icon,yes}) => 
-<View style={{height:32,width:32,borderRadius:16,alignItems:'center',justifyContent:'center',borderColor:yes?'green':'red',borderWidth:1}}>
-{icon}
+const RoundButton = ({yes}) => 
+<View 
+style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+    {yes?<Icon size={22} name='check-circle' color='white'/>:<Icon size={22} name='x-circle' color='white'/>}
+    <Text style={[localStyles.text,{marginLeft:5}]}>{yes?'Accept':'Reject'}</Text>
 </View>
 
+const localStyles=StyleSheet.create({
+    text:{
+        color:'white'
+    }
+})
 export default RoundButton

@@ -1,5 +1,5 @@
 import React,{useState,useContext} from 'react'
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable,StyleSheet } from 'react-native'
 import { Container,Input,Button } from '@/Components'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { LoginContext } from '../../Context/LoginContext'
@@ -17,7 +17,6 @@ const LoginScreen = ({navigation}) => {
         let i=users.findIndex(e=>e.username===username && e.password===password)
         if(i!==-1)
         {
-            console.log('Moze dalje')
             await AsyncStorage.setItem('user',JSON.stringify(users[i]))
             setUserLoggedIn(users[i])
         }
@@ -25,21 +24,21 @@ const LoginScreen = ({navigation}) => {
     return (
         <Container style={{justifyContent:'center'}}>
             {/* <View style={{height:'20%'}}/> */}
-            <View style={{height:'60%',width:'100%',alignItems:'center',justifyContent:'center',paddingHorizontal:'5%'}}>
-            <Text style={{fontSize:20}}>Login</Text>
+            <View style={{height:'60%',width:'100%',alignItems:'center',justifyContent:'center',paddingHorizontal:'10%'}}>
+            <Text style={{fontSize:24,color:'white',fontWeight:'bold'}}>Login</Text>
             <Divider h={25}/>
             <Input placeholder='Username' value={username} onChangeText={setUsername}/>
             <Divider/>
             <Input placeholder='Password' value={password} onChangeText={setPassword} secureTextEntry/>
+            <Divider h={30}/>
+            <Button onPress={login} title='Login'/>
             <Divider/>
-            <Button onPress={login} title='Log in'/>
-            <Divider/>
-            <Pressable style={{alignItems:'center'}} onPress={goToRegister}>
-                <Text>
+            <Pressable style={{alignItems:'center',flexDirection:'row'}} onPress={goToRegister}>
+                <Text style={localStyles.text}>
                     Don't have an account?
                 </Text>
-                <Text>
-                    Register now!
+                <Text style={[localStyles.text,{fontWeight:'bold'}]}>
+                    {' '}Register now
                 </Text>
             </Pressable>
             </View>
@@ -48,4 +47,10 @@ const LoginScreen = ({navigation}) => {
     )
 }
 
+const localStyles=StyleSheet.create({
+  text:{
+      color:'white',
+      fontSize:16
+  }  
+})
 export default LoginScreen

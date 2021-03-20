@@ -12,7 +12,8 @@ const UsersScreen = ({navigation}) => {
     }
     const renderItem=({item})=>
     <UserCard onPress={()=>navigation.navigate('User',{user:item})}
-    name={item.username}/>
+    name={item.username}
+    isFriend={item.isFriend}/>
     useEffect(()=>{
         getUsers()
     },[])
